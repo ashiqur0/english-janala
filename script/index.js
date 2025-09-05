@@ -1,4 +1,4 @@
-
+// Fetch all the lesson from API
 const loadLessons = () => {
     fetch('https://openapi.programming-hero.com/api/levels/all')
     .then(res => res.json())
@@ -7,7 +7,7 @@ const loadLessons = () => {
 
 loadLessons();
 
-// Display lessons button Functionality
+// Display each lesson to different button
 const displayLessons = (lessons) => {
     const levelContainer = document.getElementById('level-container');
     levelContainer.innerText = '';
@@ -24,26 +24,30 @@ const displayLessons = (lessons) => {
     });
 }
 
-// remove active class
+// Deselection of all button UI
 const removeActive = () => {
     const lessonButtons = document.querySelectorAll('.lesson-button');
     lessonButtons.forEach(button => button.classList.remove('active'));
 }
 
-// Display word Functionality
+// Fetch each word from API
 const loadCardWord = (id) => {
-    const url = `https://openapi.programming-hero.com/api/level/${id}`
+    manageSpinner(true);
 
+    const url = `https://openapi.programming-hero.com/api/level/${id}`
     fetch(url)
     .then(res => res.json())
     .then(data => {
         removeActive();
         const clickedButton = document.getElementById(`lesson-btn-${id}`);
+
+        // Clicked Button Selection UI
         clickedButton.classList.add('active');
         displayCardWord(data.data)
     });
 }
 
+// Display each word to different card
 const displayCardWord = (words) => {
     const wordContainer = document.getElementById('word-container');
     wordContainer.innerText = '';
@@ -57,11 +61,11 @@ const displayCardWord = (words) => {
             <h2 class="font-bold text-4xl">নেক্সট <span class="font-poppins">Lesson</span> এ যান</h2>
         </div>
         `;
+        manageSpinner(false);
         return;
     }    
 
     words.forEach(word => {
-        console.log(word);
         const card = document.createElement('div');
         card.innerHTML = `
         <div class="card bg-white rounded-xl shadow-sm text-center pt-10 pb-7 px-5 space-y-4">
@@ -69,11 +73,69 @@ const displayCardWord = (words) => {
             <p class="font-semibold">Meaning /Pronounciation</p>
             <p class="font-bangla">${word.meaning ? word.meaning : 'অর্থ পাওয়া যায়নি'} / ${word.pronunciation ? word.pronunciation : 'Pronunciation পাওয়া যায়নি'}"</p>
             <div class="flex justify-between items-center">               
-                <button class="bg-[#1A91FF10] p-4 rounded-md hover:bg-[#1A91FF80]"><i class="fa-solid fa-circle-info"></i></button>
-                <button class="bg-[#1A91FF10] p-4 rounded-md hover:bg-[#1A91FF80]"><i class="fa-solid fa-volume-high"></i></button>
+                <button class="bg-[#1A91FF10] p-4 rounded-md hover:bg-[#1A91FF80]" 
+                    onclick="loadWordDetail(${word.id})">
+                    <i class="fa-solid fa-circle-info"></i>
+                </button>
+                <button class="bg-[#1A91FF10] p-4 rounded-md hover:bg-[#1A91FF80]">
+                    <i class="fa-solid fa-volume-high"></i>
+                </button>
             </div>
         </div>
         `;
         wordContainer.append(card);
-    })
+    });
+
+    manageSpinner(false);
+}
+
+// load word details from API
+const loadWordDetail = async(id) => {
+    const url = `https://openapi.programming-hero.com/api/word/${id}`;
+    const res = await fetch(url)
+    const details = await res.json();
+    displayWordDetails(details.data);
+}
+
+// display the details of the word to a modal
+const displayWordDetails = (word) => {
+
+    const detailsBox = document.getElementById('details-container');
+    detailsBox.innerHTML = `
+    <div class="">
+        <h2 class="text-2xl font-bold">
+            ${word.word} (<i class="fa-solid fa-microphone-lines"></i>:${word.pronunciation})
+        </h2>
+    </div>
+    <div class="">
+        <h2 class="font-bold">Meaning</h2>
+        <p class="font-bangla">${word.meaning}</p>
+    </div>
+    <div class="">
+        <h2 class="font-bold">Example</h2>
+        <p class="text-gray-600">${word.sentence}</p>
+    </div>
+    <div class=""> 
+        <h2 class='font-bold'>Synonym</h2>          
+        <div>${allSynonym(word.synonyms)}</div>
+    </div>
+    `
+    document.getElementById('modal').showModal();
+}
+
+// return all synonym as string of HTML elements to the modal of word details
+const allSynonym = (synonyms) => {
+    const synonym = synonyms.map(element => `<span class='btn'>${element}</span>`);
+    return synonym.join(' ');
+}
+
+// Spinner Functionality [while loading data of word of lesson from API]
+const manageSpinner = (status) => {
+    if (status == true) {
+        document.getElementById('spinner').classList.remove('hidden');
+        document.getElementById('word-container').classList.add('hidden');
+    } else {
+        document.getElementById('word-container').classList.remove('hidden');
+        document.getElementById('spinner').classList.add('hidden');
+    }
 }
