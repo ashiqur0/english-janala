@@ -71,7 +71,7 @@ const displayWordCard = (words) => {
         <div class="card bg-white rounded-xl shadow-sm text-center pt-10 pb-7 px-5 space-y-4">
             <h2 class="text-2xl font-bold">${word.word ? word.word : 'শব্দ পাওয়া যায়নি'}</h2>
             <p class="font-semibold">Meaning /Pronounciation</p>
-            <p class="font-bangla">${word.meaning ? word.meaning : 'অর্থ পাওয়া যায়নি'} / ${word.pronunciation ? word.pronunciation : 'Pronunciation পাওয়া যায়নি'}"</p>
+            <p class="font-bangla">${word.meaning ? word.meaning : 'অর্থ পাওয়া যায়নি'} / ${word.pronunciation ? word.pronunciation : 'Pronunciation পাওয়া যায়নি'}</p>
             <div class="flex justify-between items-center">               
                 <button class="bg-[#1A91FF10] p-4 rounded-md hover:bg-[#1A91FF80]" 
                     onclick="loadWordDetail(${word.id})">
@@ -133,7 +133,7 @@ const displayWordDetails = (word) => {
 
 // return all synonym as string of HTML elements to the modal of word details
 const allSynonym = (synonyms) => {
-    const synonym = synonyms.map(element => `<span class='btn bg-[#1A91FF10]'>${element}</span>`);
+    const synonym = synonyms.map(element => `<span class='btn bg-[#1A91FF10]' onclick="pronounceWord('${element}')">${element}</span>`);
     return synonym.join(' ');
 }
 
