@@ -112,7 +112,7 @@ const displayWordDetails = (word) => {
     detailsBox.innerHTML = `
     <div class="">
         <h2 class="text-2xl font-bold">
-            ${word.word} (<i class="fa-solid fa-microphone-lines"></i>:${word.pronunciation})
+            ${word.word} (<i class="fa-solid fa-microphone-lines"></i> : ${word.pronunciation})
         </h2>
     </div>
     <div class="">
@@ -133,7 +133,7 @@ const displayWordDetails = (word) => {
 
 // return all synonym as string of HTML elements to the modal of word details
 const allSynonym = (synonyms) => {
-    const synonym = synonyms.map(element => `<span class='btn'>${element}</span>`);
+    const synonym = synonyms.map(element => `<span class='btn bg-[#1A91FF10]'>${element}</span>`);
     return synonym.join(' ');
 }
 
