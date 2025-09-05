@@ -77,7 +77,8 @@ const displayWordCard = (words) => {
                     onclick="loadWordDetail(${word.id})">
                     <i class="fa-solid fa-circle-info"></i>
                 </button>
-                <button class="bg-[#1A91FF10] p-4 rounded-md hover:bg-[#1A91FF80]">
+                <button class="bg-[#1A91FF10] p-4 rounded-md hover:bg-[#1A91FF80]"
+                    onclick="pronounceWord('${word.word}')">
                     <i class="fa-solid fa-volume-high"></i>
                 </button>
             </div>
@@ -87,6 +88,13 @@ const displayWordCard = (words) => {
     });
 
     manageSpinner(false);
+}
+
+// Pronounce Word Functionality
+function pronounceWord(word) {
+  const utterance = new SpeechSynthesisUtterance(word);
+  utterance.lang = "en-EN"; // English
+  window.speechSynthesis.speak(utterance);
 }
 
 // load word details from API
