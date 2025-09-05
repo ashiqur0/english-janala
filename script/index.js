@@ -15,12 +15,19 @@ const displayLessons = (lessons) => {
     lessons.forEach(element => {
         const buttonDiv = document.createElement('div');
         buttonDiv.innerHTML = `
-        <button onclick="loadCardWord(${element.level_no})" class="btn btn-outline btn-primary">
+        <button id="lesson-btn-${element.level_no}" class="btn btn-outline btn-primary lesson-button" 
+            onclick="loadCardWord(${element.level_no})">
             <i class="fa-solid fa-book-open"></i> Lesson - ${element.level_no}
         </button>
         `
         levelContainer.append(buttonDiv);
     });
+}
+
+// remove active class
+const removeActive = () => {
+    const lessonButtons = document.querySelectorAll('.lesson-button');
+    lessonButtons.forEach(button => button.classList.remove('active'));
 }
 
 // Display word Functionality
@@ -29,7 +36,12 @@ const loadCardWord = (id) => {
 
     fetch(url)
     .then(res => res.json())
-    .then(data => displayCardWord(data.data));
+    .then(data => {
+        removeActive();
+        const clickedButton = document.getElementById(`lesson-btn-${id}`);
+        clickedButton.classList.add('active');
+        displayCardWord(data.data)
+    });
 }
 
 const displayCardWord = (words) => {
