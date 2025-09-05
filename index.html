@@ -27,15 +27,15 @@
         href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
 
+    <!-- External CSS Connection -->
     <link rel="stylesheet" href="./styles/index.css">
 </head>
 
 <body>
-
     <!-- Header Section -->
     <header class="bg-[#badeff42] shadow-sm">
         <!-- Navbar -->
-        <div class="navbar w-11/12 mx-auto">
+        <div class="navbar w-1/1 md:w-11/12 mx-auto">
             <div class="navbar-start">
                 <div class="dropdown">
                     <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
@@ -73,7 +73,6 @@
             </div>
         </div>
     </header>
-
 
     <!-- Main Section -->
     <main>
@@ -117,7 +116,19 @@
         <section id="spinner" class="flex justify-center items-center py-10 hidden">
             <span class="loading loading-bars loading-xl"></span>
         </section>
-        
+
+        <!-- Search Box -->
+        <section class="flex justify-center mt-10">
+            <div class="join">
+                <div>
+                    <label class="input validator join-item">
+                        <input id="search-value" type="text" placeholder="Search Vocabulary" required />
+                    </label>
+                </div>
+                <button id="btn-search" class="btn btn-primary join-item">Search</button>
+            </div>
+        </section>
+
         <!-- Display Word Card Section -->
         <section id="word-container"
             class="bg-gray-100 p-3 md:p-10 mt-10 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 md:gap-5 w-1/1 md:w-11/12 mx-auto">
@@ -131,10 +142,10 @@
         </section>
 
         <!-- Detail Button's Modal -->
-        <dialog id="modal" class="modal modal-bottom sm:modal-middle">
+        <dialog id="modal" class="modal modal-bottom sm:modal-middle px-3">
             <div class="modal-box">
-                <div id="details-container" class="space-y-5"> 
-                   
+                <div id="details-container" class="space-y-5">
+
                 </div>
                 <div class="modal-action">
                     <form method="dialog">
@@ -146,6 +157,7 @@
         </dialog>
     </main>
 
+    <!-- JavaScript File Connection -->
     <script src="./script/index.js"></script>
 </body>
 

@@ -43,12 +43,12 @@ const loadCardWord = (id) => {
 
         // Clicked Button Selection UI
         clickedButton.classList.add('active');
-        displayCardWord(data.data)
+        displayWordCard(data.data)
     });
 }
 
 // Display each word to different card
-const displayCardWord = (words) => {
+const displayWordCard = (words) => {
     const wordContainer = document.getElementById('word-container');
     wordContainer.innerText = '';
 
@@ -139,3 +139,19 @@ const manageSpinner = (status) => {
         document.getElementById('spinner').classList.add('hidden');
     }
 }
+
+// Search Button Functionality
+document.getElementById('btn-search').addEventListener('click', () => {
+    removeActive();
+    const intput = document.getElementById('search-value');
+    const searchValue = intput.value.trim().toLowerCase();
+    console.log(searchValue);
+
+    fetch('https://openapi.programming-hero.com/api/words/all')
+    .then(res => res.json())
+    .then(data => {
+        const allWords = data.data;
+        const filterWords = allWords.filter(words => words.word.toLowerCase().includes(searchValue));
+        displayWordCard(filterWords);
+    });
+});
