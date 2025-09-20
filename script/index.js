@@ -139,7 +139,7 @@ const allSynonym = (synonyms) => {
 
 // Spinner Functionality [while loading data of word of lesson from API]
 const manageSpinner = (status) => {
-    if (status == true) {
+    if (status) {
         document.getElementById('spinner').classList.remove('hidden');
         document.getElementById('word-container').classList.add('hidden');
     } else {
